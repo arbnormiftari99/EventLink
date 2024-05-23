@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Events Link",
   description: "Linking events, Connecting people",
   icons: {
-    icon: '/assets/images/eventslogo.svg'
+    icon: '/assets/images/3.svg'
   }
 };
 
