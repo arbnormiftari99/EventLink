@@ -7,7 +7,7 @@ export const connectDatabase = async () => {
     if(cached.conn) return cached.conn;
     if(!MONGODB_URI) throw new Error('MONGODB_URI is missing!');
     cached.promise = cached.promise || mongoose.connect(MONGODB_URI, {
-     dbName: 'ClusterEventsLink',
+     dbName: 'EventsLink_Project',
      bufferCommands: false
     })
 
