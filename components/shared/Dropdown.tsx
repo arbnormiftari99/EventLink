@@ -20,7 +20,8 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { ICategory } from "@/lib/database/models/category.mode"
-import { useState } from "react"
+import { startTransition, useState } from "react"
+import { Input } from "../ui/input"
 
 
 type DropdownProps = {
@@ -28,9 +29,15 @@ type DropdownProps = {
     onChangeHandler?: () => void
 }
 
+
+const handleAddCategory = () => {
+
+}
+
 const Dropdown = ({ value, onChangeHandler}: DropdownProps) => {
 
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [newCategory, setNewCategory] = useState('');
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
@@ -45,18 +52,18 @@ const Dropdown = ({ value, onChangeHandler}: DropdownProps) => {
     </SelectItem>)}
 
     <AlertDialog>
-  <AlertDialogTrigger className="p-medium-14">Open</AlertDialogTrigger>
-  <AlertDialogContent>
+  <AlertDialogTrigger className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">Add new category</AlertDialogTrigger>
+  <AlertDialogContent className="bg-white">
     <AlertDialogHeader>
-      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogTitle>New Category</AlertDialogTitle>
       <AlertDialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+        <Input type="text" placeholder="Category name" className="input-field mt-3" onChange={(e) => 
+          setNewCategory(e.target.value)}/>
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Continue</AlertDialogAction>
+      <AlertDialogAction onClick={() => startTransition(handleAddCategory)}>Add</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>
