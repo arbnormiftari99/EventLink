@@ -4,6 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
+
 import {
   Form,
   FormControl,
@@ -13,10 +18,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+
 import { Input } from "@/components/ui/input"
 import { eventFormSchema } from "@/lib/validator"
 import { eventDefaultValues } from "@/constans"
 import Dropdown from "./Dropdown"
+import { FileUploader } from "./FileUploader"
+import { useState } from "react"
+import Image from "next/image"
 
 
 type EventFormProps = {
@@ -25,6 +35,9 @@ type EventFormProps = {
 }
 
 const EventForm = ({ userId, type}: EventFormProps) => {
+
+  const [files, setFiles] = useState<File[]>([]);
+
   const initialValues = eventDefaultValues
 
     const form = useForm<z.infer<typeof eventFormSchema>>({
@@ -68,6 +81,130 @@ const EventForm = ({ userId, type}: EventFormProps) => {
       />
       </div>
      
+        <div className="flex flex-col gap-5 md:flex-row">
+        <FormField
+        control={form.control}
+        name="description"
+        render={({ field }) => (
+          <FormItem className="w-full">
+            <FormControl className="h-72">
+              <Textarea placeholder="Description" {...field} className="textarea rounded-2xl" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+        <FormField
+        control={form.control}
+        name="imageUrl"
+        render={({ field }) => (
+          <FormItem className="w-full">
+            <FormControl className="h-72">
+            <FileUploader
+            onFieldChange={field.onChange}
+            imageUrl={field.value}
+            setFiles={setFiles}
+            />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+        </div>
+
+      <div className="flex flex-col gap-5 md:flex-row">
+      <FormField
+        control={form.control}
+        name="location"
+        render={({ field }) => (
+          <FormItem className="w-full">
+            <FormControl>
+              <div className="flex-center h-[54px] w-full overflow-hidden rounded-full px-4 py-2 bg-gray-50">
+                <Image
+                  src="/assets/icons/location.svg"
+                  alt="location"
+                  width={25}
+                  height={25}
+
+                />
+              <Input placeholder="Location or Online" {...field} className="input-field" />
+              </div>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      </div>
+        
+        
+      <div className="flex flex-col gap-5 md:flex-row">
+      <FormField
+        control={form.control}
+        name="startDateTime"
+        render={({ field }) => (
+          <FormItem className="w-full">
+            <FormControl>
+            <div className="flex-center h-[60px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                      <Image
+                        src="/assets/icons/calendar.svg"
+                        alt="calendar"
+                        width={24}
+                        height={24}
+                        className="filter-grey"
+                      />
+                      <p className="ml-3 whitespace-nowrap text-grey-600">Start Date:</p>
+                      <DatePicker 
+                        selected={field.value} 
+                        onChange={(date: Date) => field.onChange(date)} 
+                        showTimeSelect
+                        timeInputLabel="Time:"
+                        dateFormat="MM/dd/yyyy h:mm aa"
+                        wrapperClassName="datePicker"
+                      />
+                    </div>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      </div>
+  
+
+      <div className="flex flex-col gap-5 md:flex-row">
+      <FormField
+        control={form.control}
+        name="endDateTime"
+        render={({ field }) => (
+          <FormItem className="w-full">
+            <FormControl>
+            <div className="flex-center h-[60px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                      <Image
+                        src="/assets/icons/calendar.svg"
+                        alt="calendar"
+                        width={24}
+                        height={24}
+                        className="filter-grey"
+                      />
+                      <p className="ml-3 whitespace-nowrap text-grey-600">End Date:</p>
+                      <DatePicker 
+                        selected={field.value} 
+                        onChange={(date: Date) => field.onChange(date)} 
+                        showTimeSelect
+                        timeInputLabel="Time:"
+                        dateFormat="MM/dd/yyyy h:mm aa"
+                        wrapperClassName="datePicker"
+                      />
+                    </div>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      </div>
+
+
+
       <Button type="submit">Submit</Button>
     </form>
   </Form>
