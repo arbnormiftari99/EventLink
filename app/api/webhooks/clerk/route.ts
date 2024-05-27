@@ -7,7 +7,6 @@ import { NextResponse } from 'next/server'
 
 
 export async function POST(req: Request) {
-  console.log('Webhook POST handler invoked');
 
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
@@ -69,14 +68,12 @@ export async function POST(req: Request) {
     }
 
     const newUser = await createUser(user);
-    console.log(newUser);
     if(newUser){
       await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
           userId: newUser._id
         }
       })
-      console.log(newUser);
     }
     return NextResponse.json({message: "User created successfully", user: newUser});
   }
