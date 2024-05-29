@@ -20,8 +20,9 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { ICategory } from "@/lib/database/models/category.mode"
-import { startTransition, useState } from "react"
+import { startTransition, useEffect, useState } from "react"
 import { Input } from "../ui/input"
+import { createCategory, fetchAllCategories } from "@/lib/actions/category.action"
 
 
 type DropdownProps = {
@@ -30,14 +31,31 @@ type DropdownProps = {
 }
 
 
-const handleAddCategory = () => {
 
-}
 
 const Dropdown = ({ value, onChangeHandler}: DropdownProps) => {
 
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [newCategory, setNewCategory] = useState('');
+
+
+
+  const handleAddCategory = () => {
+    createCategory({
+      categoryName: newCategory.trim()
+    }).then((category) => {
+      setCategories((prevState) => [...prevState, category])
+    })
+  }
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const categoryList = await fetchAllCategories();
+      categoryList && setCategories(categoryList as ICategory[])
+    }
+    fetchCategories();
+  }, [])
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
