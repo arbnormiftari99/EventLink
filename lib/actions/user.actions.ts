@@ -3,7 +3,6 @@
 import { revalidatePath } from 'next/cache'
 
 import { connectDatabase } from '@/lib/database'
-// import User from '@/lib/database/models/user.model'
 import Event from '@/lib/database/models/event.model'
 import Order from '../database/models/order.model'
 import User from '../database/models/user.model'
