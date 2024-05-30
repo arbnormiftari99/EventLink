@@ -16,7 +16,7 @@ const EventDetails = async ({ params: { id }}: SearchParamProps) => {
             alt="hero image"
             width={600}
             height={600}
-            className='h-full min-h-[300px] object-center object-cover'
+            className='h-full min-h-[150px] object-center object-cover'
             />
             <div className='flex w-full flex-col gap-8 p-5 md:p-10'>
                 <div className='flex flex-col gap-6'>
