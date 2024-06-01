@@ -12,13 +12,13 @@ const EventDetails = async ({ params: { id }}: SearchParamProps) => {
   return (
     <section className='flex justify-center bg-primary-50 bg-dotted-pattern bg-contain'>
     <div className='2xl:max-w-7xl w-full grid grid-cols-1 md:grid-cols-2'>
-      <div className='flex justify-center items-center'>
+      <div className='flex justify-center items-center p-5'>
         <Image
           src={event.imageUrl}
           alt="hero image"
           width={600}
           height={600}
-          className='w-full h-full min-h-[150px] object-center object-cover'
+          className='w-full h-full min-h-[400px] object-center object-cover rounded-lg shadow-lg'
         />
       </div>
       <div className='flex flex-col w-full gap-8 p-5 md:p-10 mt-10'>
